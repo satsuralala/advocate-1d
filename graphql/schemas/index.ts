@@ -1,11 +1,26 @@
 import { gql } from "graphql-tag";
 
 export const typeDefs = gql`
-  type Query {
-    helloQuery: String
+  scalar Date
+
+  type Task{
+  _id:ID!
+  taskName:String!
+  isDone:Boolean!
+  priority:Int!
+  createdAt:Date
+  updatedAt:Date
   }
 
-  type Mutation {
-    sayHello(name: String!): String
+  type Query{
+      getDoneTasksLists:[Task]
+      getAllTasks:[Task]
+  }
+  
+  type Mutation{
+  addTask(taskName:String!, priority:Int!):Task
+  updateTask(_id:ID!, taskName:String, priority:Int, isDone:Boolean):Task
   }
 `;
+
+
