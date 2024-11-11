@@ -1,9 +1,5 @@
-import { Task } from "@/models/Tasks";
+import { Task } from "@/graphql/models/Tasks";
 
-export const getDoneTasksLists = async() => {
-  return await Task.find({isDone:true});
+export const helloQuery = () => {
+  return "This is hello Query";
 };
-
-export const getAllTasks=async()=>{
-  return await Task.find({isDone:Boolean});
-}

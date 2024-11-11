@@ -13,7 +13,7 @@ export const typeDefs = gql`
   }
 
   type Query{
-      getDoneTasksLists:[Task]
+      getFinishedTasksLists:[Task]
       getAllTasks:[Task]
   }
   

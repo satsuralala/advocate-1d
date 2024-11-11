@@ -25,4 +25,5 @@ const server = new ApolloServer({
 
 export const config = { api: { bodyParser: false, externalResolver: true } };
 
-export default server.createHandler();
+// export default server.createHandler();
+export default server;
