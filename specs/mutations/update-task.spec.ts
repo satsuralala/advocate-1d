@@ -12,7 +12,7 @@ jest.mock("../../graphql/models/Tasks", () => ({
         updatedAt: new Date(),
       })
       .mockResolvedValueOnce(new Error('failed to find the task'))
-      .mockRejectedValueOnce(new Error('Error happened during task updating process'))
+      .mockRejectedValueOnce(new Error('failed to update the task'))
   }
 }));
 
@@ -62,7 +62,7 @@ describe("Update the task mutation", () => {
       });
     } catch (error) {
         if(error instanceof Error){
-            expect(error.message).toEqual("Error happened during task updating process")
+            expect(error.message).toEqual("failed to update the task")
         }else{
             throw error;
         }
