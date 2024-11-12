@@ -40,7 +40,7 @@ describe("Adding task mutation",()=>{
             await addTask({}, { taskName: "", priority: 8 });
         } catch (error) {  
             if(error instanceof Error){
-                expect(error.message).toBe("task cannot be empty")
+                expect(error.message).toEqual("task cannot be empty")
             }else{
                 throw error;
             }
