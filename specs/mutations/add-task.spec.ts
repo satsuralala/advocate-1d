@@ -9,35 +9,43 @@ jest.mock("../../graphql/models/Tasks",()=>({
             isDone:false,
             createdAt:new Date(),
             updatedAt:new Date(),
-        }).mockRejectedValueOnce(new Error("error happened during adding the task"))
+        }).mockRejectedValueOnce(new Error("failed to add a task"))
+        .mockRejectedValueOnce(new Error("task cannot be empty"))
     },
 }));
 
 describe("Adding task mutation",()=>{
     it("Should add a task successfully", async()=>{
-        const res=await addTask({},{taskName:"test task", priority:9});
+        const res=await addTask({},{taskName:"task1", priority:8});
         expect(res).toHaveProperty("taskName", "task1");
         expect(res).toHaveProperty("priority", 8);
-        expect(res.isDone).toEqual(false);
+        expect(res.isDone).toStrictEqual(false);
     })
 
     it("Should throw an error when task creation fails", async () => {
         try {
-            await addTask({}, { taskName: "test task", priority: 8 });
+            await addTask({}, { taskName: "task2", priority: 1 });
         } catch (error: unknown) {  
             if (error instanceof Error) { 
-                expect(error.message).toBe("Error during task creation");
+                expect(error.message).toBe("failed to add a task");
             } else {
                 throw error; 
             }
             
-        }
-    
+        }        
+    });
+
+    it("Should throw an error when  task is empty", async()=>{
         try {
             await addTask({}, { taskName: "", priority: 8 });
         } catch (error) {  
-            expect((error as Error).message).toBe("Validation failed: taskName cannot be empty");
+            if(error instanceof Error){
+                expect(error.message).toBe("task cannot be empty")
+            }else{
+                throw error;
+            }
         }
+
     });
     
     

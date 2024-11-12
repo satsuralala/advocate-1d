@@ -1,20 +1,20 @@
 import { getAllTasks } from "@/graphql/resolvers/queries/get-all-tasks";
 
-jest.mock("../../graphql/models/Tasks", async()=>({
+jest.mock("../../graphql/models/Tasks", ()=>({
     Task:{
         find:jest.fn()
-        .mockResolvedValueOnce({
+        .mockResolvedValueOnce([{
             taskName:"tasks",
-            priority:"3",
+            priority:3,
             isDone:true,
-        }).mockRejectedValueOnce(new Error('error in mock'))
+        }]).mockRejectedValueOnce(new Error('failed to get all tasks'))
     },
 }));
 
-describe("get all tasks query", async()=>{
+describe("get all tasks query", ()=>{
     it('should get all tasks', async()=>{
         const res=await getAllTasks();
-        expect(res).toHaveProperty([
+        expect(res).toEqual([
             {'taskName':'tasks', 'priority':3,"isDone":true}
         ]);
     })
