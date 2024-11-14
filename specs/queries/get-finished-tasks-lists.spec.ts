@@ -21,14 +21,10 @@ describe("get finished tasks query", ()=>{
     });
 
     it("should an throw error if smth failed", async()=>{
-        try{
-            await getFinishedTasksLists();
-        }catch(error){
-            if(error instanceof Error){
-                expect(error.message).toEqual("failed to get all finished tasks")
-            }else{
-                throw error;
-            }
-        }  
+       
+        const res=await getFinishedTasksLists();
+        expect(res).toEqual(new Error("failed to get all finished tasks"));
+
+       
     });
 });

@@ -4,9 +4,7 @@ export const addTask = async (
   _: unknown,
   { taskName, priority }: { taskName: string; priority: number }
 ) => {
-  if (!taskName) {
-    throw new Error("task cannot be empty");
-  }
+ 
   try {
     const newTask = await Task.create({
       taskName,
@@ -16,6 +14,6 @@ export const addTask = async (
     });
     return newTask;
   } catch (error) {
-    console.log(error);
+   return error;
   }
 };

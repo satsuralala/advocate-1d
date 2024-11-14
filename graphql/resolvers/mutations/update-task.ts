@@ -21,6 +21,6 @@ export const updateTask = async (
     );
     return updatedTask;
   } catch (error) {
-    console.log(error);
+   return error;
   }
 };

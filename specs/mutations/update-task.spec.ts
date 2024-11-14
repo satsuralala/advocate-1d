@@ -36,36 +36,25 @@ describe("Update the task mutation", () => {
 
   it("should throw an error if task is not found", async () => {
 
-    try {
-      await updateTask({}, {
+      const res=await updateTask({}, {
         _id: '321',
         taskName: "nonexistent task",
         priority: 3,
         isDone: false,
       });
-    } catch (error) {
-        if(error instanceof Error){
-            expect(error.message).toEqual("failed to find the task")
-        }else{
-            throw error;
-        }
-    }
+      expect(res).toEqual(new Error("failed to find the task"))
+   
   });
 
   it("should handle other errors during task update", async () => {
-    try {
-      await updateTask({}, {
+    
+      const res=await updateTask({}, {
         _id: '123',
         taskName: "example task",
         priority: 4,
         isDone: false,
       });
-    } catch (error) {
-        if(error instanceof Error){
-            expect(error.message).toEqual("failed to update the task")
-        }else{
-            throw error;
-        }
-    }
+    
+      expect(res).toEqual(new Error("failed to update the task"))
   });
 });

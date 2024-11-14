@@ -10,7 +10,7 @@ jest.mock("../../graphql/models/Tasks",()=>({
             createdAt:new Date(),
             updatedAt:new Date(),
         }).mockRejectedValueOnce(new Error("failed to add a task"))
-        .mockRejectedValueOnce(new Error("task cannot be empty"))
+       
     },
 }));
 
@@ -23,30 +23,7 @@ describe("Adding task mutation",()=>{
     })
 
     it("Should throw an error when task creation fails", async () => {
-        try {
-            await addTask({}, { taskName: "task2", priority: 1 });
-        } catch (error: unknown) {  
-            if (error instanceof Error) { 
-                expect(error.message).toBe("failed to add a task");
-            } else {
-                throw error; 
-            }
-            
-        }        
-    });
-
-    it("Should throw an error when  task is empty", async()=>{
-        try {
-            await addTask({}, { taskName: "", priority: 8 });
-        } catch (error) {  
-            if(error instanceof Error){
-                expect(error.message).toEqual("task cannot be empty")
-            }else{
-                throw error;
-            }
-        }
-
-    });
-    
-    
+            const res=await addTask({}, { taskName: "task2", priority: 1 });
+            expect(res).toEqual(new Error("failed to add a task"))
+    }); 
 })
